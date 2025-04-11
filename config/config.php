@@ -13,12 +13,12 @@ class Config {
     return $this->conn;
   }
 
-  public function insertData($name,$age,$course)
-  {
-   $this->initDB();      
-    $query = "INSERT INTO student (name,age,course) VALUES ('$name',$age,'$course');";
-    return mysqli_query($this->conn,$query);
-  }
+  public function insertData($name, $age, $course) {
+    $conn = $this->initDB();
+    $query = "INSERT INTO student (name, age, course) VALUES ('$name', '$age', '$course')";
+    return mysqli_query($conn, $query);
+}
+
 
   public function fetchData()
   {

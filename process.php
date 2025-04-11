@@ -19,8 +19,8 @@ $res = $config->fetchData();
 </head>
 <body>
 
-<div class = "container pt-4 ">
-    <table class="table">
+<div class = "container pt-5 col-4 ">
+    <table class="table table-hover table-dark  table-striped">
         <thead>
             <tr>
                 <th>ID</th>

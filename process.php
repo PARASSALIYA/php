@@ -7,6 +7,51 @@ $config = new Config();
 
 $res = $config->fetchData();
 
+// delete
+if (isset($_POST['delete_id'])) {
+    
+    $id = $_POST['deleteId'];
+    
+    $deleteres = $config->deleteData($id);
+    
+    if ($deleteres) {
+        $res = $config->fetchData();
+        echo '<div class="container pt-5"><div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> Record Deleted Successfully....
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div></div>';
+     } else {
+        echo '<div class="container pt-5"><div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Failure!</strong> Record Deletion Failed....
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div></div>';
+    }
+}
+// Edit
+if (isset($_POST['edit_id'])) {
+    
+    $id = $_POST['editId'];
+    $name = $_POST['name'];
+    $age = $_POST['age'];
+    $course = $_POST['course'];
+        
+    $editres = $config->updateData($id,$name,$age,$course);
+    
+    if ($editres) {
+
+        $res = $config->fetchData();
+    
+     } else {
+        echo '<div class="container pt-5"><div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Failure!</strong> Record Deletion Failed....
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div></div>';
+    }
+}
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,13 +65,14 @@ $res = $config->fetchData();
 <body>
 
 <div class = "container pt-5 col-4 ">
-    <table class="table table-hover table-dark  table-striped">
+    <table class="table table-hover table-dark  table-striped text-center">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Age</th>
                 <th>Course</th>
+                <th colspan="2">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -36,6 +82,18 @@ $res = $config->fetchData();
                         <td><?php echo $result['name']?></td>
                         <td><?php echo $result['age']?></td>
                         <td><?php echo $result['course']?></td>
+                        <td>
+                            <form method="POST">
+                                <input type="hidden" value = "<?php echo $result['id'] ?>" name="editId">     
+                                <button type="submit" class="btn btn-warning" name="edit_id">Edit</button>
+                            </form>
+                        </td>    
+                          <td>
+                              <form method="POST">    
+                                  <input type="hidden" value="<?php echo $result['id'] ?>" name="deleteId">     
+                                  <button type="submit" class="btn btn-danger" name="delete_id">DELETE</button>
+                                </form>
+                            </td>
                     </tr>
                 <?php } ?>
         </tbody>
